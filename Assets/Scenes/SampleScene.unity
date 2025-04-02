@@ -1055,10 +1055,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a433f5fcdd522546917fda8c29ca426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 3477935257671315552, guid: 4eef45664b401a34da1e6a35d03a71a2, type: 3}
+  _prefab: {fileID: 539581700615575565, guid: 4eef45664b401a34da1e6a35d03a71a2, type: 3}
+  _colorChanger: {fileID: 1767111658}
   _height: 10
   _spawnPlaceMesh: {fileID: 1269735364}
   _delay: 1
+  _isSpawning: 1
 --- !u!4 &2049502958
 Transform:
   m_ObjectHideFlags: 0

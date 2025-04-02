@@ -1,22 +1,22 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
-    [SerializeField] LayerMask _layerMask;
+    [SerializeField] private LayerMask _layerMask;
+    [SerializeField] private Renderer _renderer;
 
     private ColorChanger _colorChanger;
-    private Spawner _spawner;
-    private Renderer _renderer;
-
     private Color _defaultСolor;
-    private float _lifeTime;
+
     private bool isFirstCollision = true;
+    private WaitForSecondsRealtime _lifeTime;
+
+    public Action<Cube> Died;
 
     private void Awake()
     {
-        _colorChanger = FindObjectOfType<ColorChanger>();
-        _renderer = GetComponent<Renderer>();
-        _spawner = FindObjectOfType<Spawner>();
         _defaultСolor = _renderer.material.color;
     }
 
@@ -26,19 +26,35 @@ public class Cube : MonoBehaviour
         {
             isFirstCollision = false;
             _renderer.material.color = _colorChanger.GetRandomColor();
-            Invoke(nameof(ReturnCube), _lifeTime);
+            StartCoroutine(DeathTimerCoroutine());
         }
     }
 
-    public void ResetCube(float lifeTime)
+    public void ResetCube(float lifeTime, Vector3 position)
     {
+        transform.position = position;
+        transform.rotation = Quaternion.Euler(Vector3.zero);
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         _renderer.material.color = _defaultСolor;
         isFirstCollision = true;
-        _lifeTime = lifeTime;
+        SetLifeTime(lifeTime);
     }
 
-    private void ReturnCube()
+    public void SetLifeTime(float lifeTime)
     {
-        _spawner.ReturnCube(gameObject);
+        _lifeTime = new WaitForSecondsRealtime(lifeTime);
+    }
+
+    public void SetColorChanger(ColorChanger colorChanger)
+    {
+        _colorChanger = colorChanger;
+    }
+
+    private IEnumerator DeathTimerCoroutine()
+    {
+        yield return _lifeTime;
+        Died?.Invoke(this);
+        Died = null;
     }
 }

@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
 
-
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private Cube _prefab;

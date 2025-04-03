@@ -6,6 +6,7 @@ public class Cube : MonoBehaviour
 {
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private Renderer _renderer;
+    private Rigidbody _rigidbody;
 
     private ColorChanger _colorChanger;
     private Color _defaultСolor;
@@ -18,6 +19,7 @@ public class Cube : MonoBehaviour
     private void Awake()
     {
         _defaultСolor = _renderer.material.color;
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -30,12 +32,12 @@ public class Cube : MonoBehaviour
         }
     }
 
-    public void ResetCube(float lifeTime, Vector3 position)
+    public void ResetParameters(float lifeTime, Vector3 position)
     {
         transform.position = position;
         transform.rotation = Quaternion.Euler(Vector3.zero);
-        GetComponent<Rigidbody>().velocity = Vector3.zero;
-        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.angularVelocity = Vector3.zero;
         _renderer.material.color = _defaultСolor;
         isFirstCollision = true;
         SetLifeTime(lifeTime);

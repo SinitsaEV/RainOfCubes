@@ -63,7 +63,7 @@ public class Spawner : MonoBehaviour
 
     private void ActionOnGet(Cube cube)
     {
-        cube.ResetCube(GetRandomLifeTime(), GetRandomSpawnPosition());
+        cube.ResetParameters(GetRandomLifeTime(), GetRandomSpawnPosition());
         cube.gameObject.SetActive(true);
         cube.Died += OnDied;
     }

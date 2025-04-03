@@ -71,6 +71,7 @@ public class Spawner : MonoBehaviour
     private void OnDied(Cube cube)
     {
         _pool.Release(cube);
+        cube.Died -= OnDied;
     }
 
     private Vector3 GetRandomSpawnPosition()

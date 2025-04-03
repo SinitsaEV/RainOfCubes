@@ -57,6 +57,5 @@ public class Cube : MonoBehaviour
     {
         yield return _lifeTime;
         Died?.Invoke(this);
-        Died = null;
     }
 }
